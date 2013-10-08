@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <script type="text/javascript" src="ejs.js"></script>
+    <script type="text/javascript" src="less-1.5.0-b4.min.js"></script>
+  </head>
+  <body>
+    <div class="example">LESS-pipeline</div>
+    <small>How to run it:
+      <pre>
+        cd less-pipeline
+        python -m SimpleHTTPServer
+      </pre>
+
+       Open <a href="http://localhost:8000">http://localhost:8000</a>
+    </small>
+
+    <style id="custom-css"></style>
+    <script>
+      var scss = new EJS({url: 'main.scss.ejs'}).render({color: 'red'});
+      parser = new less.Parser();
+      parser.parse(scss, function(_, compiledTree) {
+         var css = compiledTree.toCSS();
+         document.querySelector("#custom-css").innerHTML = css;
+      });
+    </script>
+  </body>
+</html>
